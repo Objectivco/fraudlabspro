@@ -156,6 +156,14 @@ class FraudLabsPro {
 			$params .= '&card_hash=' . rawurlencode($this->doHash(preg_replace('/\D/', '', $this->flpRequest->creditCardNumber)));
 		}
 
+		if (!is_null($this->flpRequest->creditCardHash)){
+			$params .= '&card_hash=' . rawurlencode( $this->flpRequest->creditCardHash );
+		}
+
+		if (!is_null($this->flpRequest->creditCardBinNoHash)){
+			$params .= '&bin_no=' . rawurlencode( $this->flpRequest->creditCardBinNoHash );
+		}
+
 		if (!is_null($this->flpRequest->phone)){
 			$params .= '&user_phone=' . rawurlencode(preg_replace('/\D/', '', $this->flpRequest->phone));
 		}

@@ -84,11 +84,14 @@ class FraudLabsPro {
 		if (!is_null($this->flpRequest->firstName)){
 			$params .= '&first_name=' . rawurlencode($this->flpRequest->firstName);
 		}
-		
+
 		if (!is_null($this->flpRequest->lastName)){
 			$params .= '&bill_city=' . rawurlencode($this->flpRequest->lastName);
 		}
 
+		if (!is_null($this->flpRequest->billingAddress)){
+			$params .= '&bill_addr=' . rawurlencode($this->flpRequest->billingAddress);
+		}
 
 		if (!is_null($this->flpRequest->billingCity)){
 			$params .= '&bill_city=' . rawurlencode($this->flpRequest->billingCity);
@@ -202,7 +205,7 @@ class FraudLabsPro {
 		if (!is_null($this->flpRequest->sessionId)){
 			$params .= '&session_id=' . rawurlencode($this->flpRequest->sessionId);
 		}
-		
+
 		if (!is_null($this->flpRequest->flpChecksum)){
 			$params .= '&flp_checksum=' . rawurlencode($this->flpRequest->flpChecksum);
 		}
@@ -236,7 +239,7 @@ class FraudLabsPro {
 				return $result;
 		}
 	}
-	
+
 	///////////////////////////////////////
 	// Purpose: feedback the order status
 	// Input:
@@ -252,19 +255,19 @@ class FraudLabsPro {
 		// Perform validation (where applicable) and construct the REST queries
 		$params = 'key=' . $this->apiKey;
 		$params .= '&id=' . rawurlencode($transactionID);
-		
+
 		if (in_array($action, array('APPROVE', 'REJECT'))){
 			$params .= '&action=' . $action;
 		}
 		else
 			return NULL;
-			
+
 		if (in_array($returnAs, array('json', 'xml'))){
 			$params .= '&format=' . $returnAs;
 		}
 		else
 			return NULL;
-			
+
 		//Perform fraud check (3 tries on fails)
 		$retry = 0;
 		while($retry++ < 3){
@@ -276,7 +279,7 @@ class FraudLabsPro {
 		//Return value to caller
 		return $result;
 	}
-	
+
 	// List of ISO-3166 country codes for validation before sent
 	private function isCountryCode($cc){
 		if(!$cc) return false;
@@ -354,7 +357,7 @@ class Flp_Request{
 	public $lastName = NULL;
 	public $firstName = NULL;
 	public $flpChecksum = NULL;
-	
+
 
 	//Reset the variables
 	public function reset(){
